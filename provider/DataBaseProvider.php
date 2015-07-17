@@ -124,6 +124,16 @@ class DataBaseProvider
 		return $sth->execute();
 	}
 
+	public function lastId($name = '')
+	{
+		return $this->pdo->lastInsertId($name);
+	}
+
+	public function getError()
+	{
+		return $this->pdo->errorInfo();
+	}
+
 	private function existColumn($table, $column)
 	{
 		$sql = "SHOW COLUMNS FROM ".$table." WHERE Field = '".$column."' ";
@@ -134,10 +144,7 @@ class DataBaseProvider
 		return $existRow;
 	}
 
-	public function getError()
-	{
-		return $this->pdo->errorInfo();
-	}
+
 
 }
 
