@@ -31,7 +31,7 @@ class FormProvider
 		foreach ($options as $attr => $value) {
 			$atributes .= $attr . "= '".$value."'" ;
 		}
-		$this->view = "<form method='".$method."' action = '".$action."' ".$atributes." >";
+		$this->view = "<form method='".$method."' action = '".$action."' enctype='multipart/form-data' ".$atributes." >";
 		
 	}
 
@@ -67,6 +67,7 @@ class FormProvider
 			'step'			=> '',
 			'min'			=> '',
 			'max'			=> '',
+			'accept'		=> '',
 		), 
 		$prefix = array(
 			'class'			=> '',
@@ -118,7 +119,7 @@ class FormProvider
 	public function submit($name, $value = '', 
 		$options = array(
 			'class'			=> '',
-			'class'			=> '',
+			'label'			=> '',
 		), 
 		$prefix = array(
 			'class'			=> '',
