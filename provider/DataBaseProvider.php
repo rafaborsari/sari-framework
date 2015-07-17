@@ -88,6 +88,7 @@ class DataBaseProvider
 				$values[$i]
 			);
 		}
+
 		return $sth->execute();
 	}
 
@@ -131,6 +132,11 @@ class DataBaseProvider
 		$existRow = $sth->fetch(PDO::FETCH_ASSOC);
 
 		return $existRow;
+	}
+
+	public function getError()
+	{
+		return $this->pdo->errorInfo();
 	}
 
 }
