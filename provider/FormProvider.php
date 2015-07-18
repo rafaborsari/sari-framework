@@ -9,13 +9,13 @@ class FormProvider
 
 	private $csrf;
 	public $data;
+	public $view;
 
 	public function __construct()
 	{
 		$this->csrf = md5(__DIR__);
 		$_SESSION['crft'] = $this->csrf;		
 		$this->router = new RouterProvider;
-		
 	}
 
 	public function startForm($options = array(), $data = '', $action = '', $method = 'POST')
@@ -31,7 +31,7 @@ class FormProvider
 		foreach ($options as $attr => $value) {
 			$atributes .= $attr . "= '".$value."'" ;
 		}
-		$this->view = "<form method='".$method."' action = '".$action."' enctype='multipart/form-data' ".$atributes." >";
+		$this->view['startForm'] = "<form method='".$method."' action = '".$action."' enctype='multipart/form-data' ".$atributes." >";
 		
 	}
 
@@ -54,7 +54,7 @@ class FormProvider
 			"<option value='".$value[$idList]."' ".$selected." >".$value[$listShow]."</option>";
 		}
 
-		$this->view .= include('templates/forms/select-list.php');
+		$this->view[$name] = include('templates/forms/select-list.php');
 	}
 
 	public function add($name, $type = 'text', 
@@ -85,10 +85,10 @@ class FormProvider
 
 		switch ($type) {
 			case 'number':
-				$this->view .= include('templates/forms/input-number.php');
+				$this->view[$name] = include('templates/forms/input-number.php');
 				break;
 			default:
-				$this->view .= include('templates/forms/input-text.php');
+				$this->view[$name] = include('templates/forms/input-text.php');
 				break;
 		}
 	}
@@ -113,7 +113,7 @@ class FormProvider
 		$required = (is_null($options['required']) ? "" : "required='required'");
 		$autofocus = (is_null($options['autofocus']) ? "" : "autofocus='autofocus'");
 
-		$this->view .= include('templates/forms/input-textarea.php');
+		$this->view[$name] = include('templates/forms/input-textarea.php');
 	}
 
 	public function submit($name, $value = '', 
@@ -126,7 +126,7 @@ class FormProvider
 		)
 	)
 	{
-		$this->view .= include('templates/forms/input-submit.php');
+		$this->view[$name] = include('templates/forms/input-submit.php');
 	}
 
 	public function isValid()
@@ -142,18 +142,19 @@ class FormProvider
 
 	public function endForm()
 	{
-		$this->view .= "<input type='hidden' name='csrf' value='".sha1($this->csrf)."' />";
-		$this->view .= "</form>";
+		$this->view['csrf'] = "<input type='hidden' name='csrf' value='".sha1($this->csrf)."' />";
+		$this->view['endForm'] = "</form>";
 	}
 
 	public function getView()
 	{
-		return $this->view;
+
+		return implode("", $this->view);
 	}
 
 	public function createView()
 	{
-		echo $this->view;
+		echo implode("", $this->view);
 	}
 
 }
