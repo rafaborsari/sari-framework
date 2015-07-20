@@ -1,0 +1,13 @@
+/*Class Utils*/
+.no-margin{margin: 0 !important;}
+.no-margin-bot{margin-bottom: 0 !important;}
+
+
+/*Breadcrumb*/
+.breadcrumb{}
+.breadcrumb ul{z-index: 0 !important;}
+.breadcrumb li{float: left;}
+.breadcrumb li a i{color: #000 !important;}
+
+/*Chart Reset Trial*/
+div ._ye11ow{display:none !important;}
