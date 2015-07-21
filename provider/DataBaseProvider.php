@@ -98,11 +98,11 @@ class DataBaseProvider
 			if ($this->existColumn($table, $column)) {
 				$updates[] = $column . '=:' . $column;
 				$placeholders[] = ":" . $column;
-				$values[] = $value;			
+				$values[] = $value;
 			}
 		}
 
-		$sql = "UPDATE ".$table." SET ".implode(',', $updates)." WHERE ".$id[0]." = ".$id[1]." ";
+		$sql = "UPDATE ".$table." SET ".implode(',', $updates)." WHERE ".$id[0]." = '".$id[1]."' ";
 
 		$sth = $this->pdo->prepare($sql);
 
@@ -113,7 +113,9 @@ class DataBaseProvider
 				$values[$i]
 			);
 		}
+		
 		return $sth->execute();
+		
 	}
 
 	public function delete($table, $id)
