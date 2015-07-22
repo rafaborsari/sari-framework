@@ -18,8 +18,7 @@ class ResponseProvider
 		}
 		$redirectUrl = $this->router->url . $url;
 		if (headers_sent()) {
-			echo 
-			"<script>location.replace('".$redirectUrl."'); </script>";
+			echo "<script>location.replace('".$redirectUrl."'); </script>";
 		}
 		header('Location: ' . $redirectUrl, true, $statusCode);
 	}
@@ -30,7 +29,7 @@ class ResponseProvider
 			header($key . ":" . $value, true);
 		}
 		$redirectUrl = $this->router->url . "error/code/" . $statusCode;
-		header('Location: ' . $redirectUrl, true, 302);
+		echo "<script>location.replace('".$redirectUrl."'); </script>";
 
 	}
 
