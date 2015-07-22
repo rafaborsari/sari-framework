@@ -6,6 +6,8 @@ use Sari\Provider\RouterProvider;
 
 use KoolChart;
 use BarSeries;
+use AreaSeries;
+use ColumnSeries;
 
 class GraphProvider
 {
@@ -22,7 +24,6 @@ class GraphProvider
 		$this->chart->DecimalNumber = 2;
 		$this->chart->DecimalSeparator = ",";
 		$this->chart->ThousandSeparator = ".";
-
 	}
 
 	public function createBarChart($position, 
@@ -48,6 +49,27 @@ class GraphProvider
 	public function addBarSeries($name, $dataFormat = '{0}', $data = array(), $colorBar = 'auto')
 	{
 		$series = new BarSeries();
+		$series->Name = $name;
+		$series->TooltipsAppearance->DataFormatString = $dataFormat;
+		$series->Appearance->BackgroundColor = $colorBar;
+		$series->ArrayData($data);
+		$this->chart->PlotArea->AddSeries($series);
+	}
+
+	public function addAreaSeries($name, $dataFormat = '{0}', $data = array(), $colorBar = 'auto')
+	{
+		$series = new AreaSeries();
+		$series->Name = $name;
+		$series->LabelsAppearance->DataFormatString = $dataFormat;
+		$series->TooltipsAppearance->DataFormatString = $dataFormat;
+		$series->Appearance->BackgroundColor = $colorBar;
+		$series->ArrayData($data);
+		$this->chart->PlotArea->AddSeries($series);
+	}
+
+	public function addColumnSeries($name, $dataFormat = '{0}', $data = array(), $colorBar = 'auto')
+	{
+		$series = new ColumnSeries();
 		$series->Name = $name;
 		$series->TooltipsAppearance->DataFormatString = $dataFormat;
 		$series->Appearance->BackgroundColor = $colorBar;
