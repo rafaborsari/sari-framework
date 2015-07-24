@@ -48,6 +48,9 @@ class FormProvider
 		)
 	)
 	{
+		$select .= 
+		"<option selected >".$options['placeholder']."</option>";
+
 		foreach ($list as $key => $value) {
 			$selected = ($this->data[$name] == $value[$idList] ? 'disabled selected' : '');
 			$select .= 
