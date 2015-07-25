@@ -35,56 +35,44 @@ class FormProvider
 		
 	}
 
-	public function select($name, $list = array(), $idList, $listShow, 
-		$options = array(
-			'placeholder' 	=> '',
-			'class'			=> '',
-			'required'		=> '',
-			'label'			=> '',
-			'selected'		=> '',
-		), 
-		$prefix = array(
-			'class'			=> '',
-		)
-	)
+	public function select($name, $list = array(), $idList, $listShow, $options = array(), $prefixs = array())
 	{
-		$select .= 
-		"<option selected >".$options['placeholder']."</option>";
 
+		foreach ($options as $attr => $content) {
+			$option[$attr]['base'] = "".$attr."='".$content."' ";
+			$option[$attr]["value"] = $content;
+		}
+
+		foreach ($prefixs as $attr => $content) {
+			$prefix[$attr]['base'] = "".$attr."='".$content."' ";
+			$prefix[$attr]['value'] = $content;
+		}
+
+		$selects .= 
+		"<option value='%' selected >".$option['placeholder']['value']."</option>";
 		foreach ($list as $key => $value) {
-			$selected = ($this->data[$name] == $value[$idList] ? 'disabled selected' : '');
-			$select .= 
+			$selected = ($this->data[$name] == $value[$idList] ? 'selected' : '');
+			$selects .= 
 			"<option value='".$value[$idList]."' ".$selected." >".$value[$listShow]."</option>";
 		}
 
 		$this->view[$name] = include('templates/forms/select-list.php');
 	}
 
-	public function add($name, $type = 'text', 
-		$options = array(
-			'placeholder' 	=> '',
-			'class'			=> '',
-			'required'		=> '',
-			'label'			=> '',
-			'autofocus'		=> '',
-			'step'			=> '',
-			'min'			=> '',
-			'max'			=> '',
-			'accept'		=> '',
-		), 
-		$prefix = array(
-			'class'			=> '',
-		)
-	)
+	public function add($name, $type = 'text', $options = array(), $prefixs = array())
 	{
-
 		if (isset($this->data[$name])) {
 			$value = trim(strip_tags($this->data[$name]));
 		}
 
-		$required = (is_null($options['required']) ? "" : "required='required'");
-		$autofocus = (is_null($options['autofocus']) ? "" : "autofocus='autofocus'");
-
+		foreach ($options as $attr => $content) {
+			$option[$attr]['base'] = "".$attr."='".$content."' ";
+			$option[$attr]["value"] = $content;
+		}
+		foreach ($prefixs as $attr => $content) {
+			$prefix[$attr]['base'] = "".$attr."='".$content."' ";
+			$prefix[$attr]['value'] = $content;
+		}
 
 		switch ($type) {
 			case 'number':
@@ -96,40 +84,41 @@ class FormProvider
 		}
 	}
 
-	public function textarea($name,
-		$options = array(
-			'placeholder' 	=> '',
-			'class'			=> '',
-			'required'		=> '',
-			'label'			=> '',
-			'autofocus'		=> '',
-		), 
-		$prefix = array(
-			'class'			=> '',
-		)
-	)
+	public function textarea($name,	$options = array(), $prefixs = array())
 	{
 		if (isset($this->data[$name])) {
 			$value = trim(strip_tags($this->data[$name]));
 		}
 
-		$required = (is_null($options['required']) ? "" : "required='required'");
-		$autofocus = (is_null($options['autofocus']) ? "" : "autofocus='autofocus'");
+		foreach ($options as $attr => $content) {
+			$option[$attr]['base'] = "".$attr."='".$content."' ";
+			$option[$attr]["value"] = $content;
+		}
+		foreach ($prefixs as $attr => $content) {
+			$prefix[$attr]['base'] = "".$attr."='".$content."' ";
+			$prefix[$attr]['value'] = $content;
+		}
 
 		$this->view[$name] = include('templates/forms/input-textarea.php');
 	}
 
-	public function submit($name, $value = '', 
-		$options = array(
-			'class'			=> '',
-			'label'			=> '',
-		), 
-		$prefix = array(
-			'class'			=> '',
-		)
-	)
+	public function submit($name, $value = '', $options = array(), $prefixs = array())
 	{
+		foreach ($options as $attr => $content) {
+			$option[$attr]['base'] = "".$attr."='".$content."' ";
+			$option[$attr]["value"] = $content;
+		}
+		foreach ($prefixs as $attr => $content) {
+			$prefix[$attr]['base'] = "".$attr."='".$content."' ";
+			$prefix[$attr]['value'] = $content;
+		}
+
 		$this->view[$name] = include('templates/forms/input-submit.php');
+	}
+
+	public function hidden($name, $value)
+	{
+		$this->view[$name] = include('templates/forms/input-hidden.php');
 	}
 
 	public function isValid()
