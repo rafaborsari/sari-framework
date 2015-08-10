@@ -15,12 +15,18 @@ class MailerProvider
 		$this->router = new RouterProvider;
 
 		$this->config = $this->dbh->findOneBy('Configuracao', 'id', 1);
-		// var_dump($config);
 
 		$this->mh = new PHPMailer;
 		$this->mh->isSMTP();
 		$this->mh->SMTPAuth = true;
 		$this->mh->SMTPSecure = 'tls';
+		$this->mh->SMTPOptions = array(
+			'ssl' => array(
+				'verify_peer'		=> false,
+				'verify_peer_name'	=> false,
+				'allow_self_signed'	=> true
+			),
+		);
 		$this->mh->isHTML(true);
 		$this->mh->Port = 587;
 
