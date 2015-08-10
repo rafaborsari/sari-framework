@@ -20,7 +20,7 @@ class ResponseProvider
 		if (headers_sent()) {
 			echo "<script>location.replace('".$redirectUrl."'); </script>";
 		}
-		header('Location: ' . $redirectUrl, true, $statusCode);
+		echo "<script>location.replace('".$redirectUrl."'); </script>";
 	}
 
 	public function abort($statusCode = '404', $message = '', $headers = array())
@@ -28,7 +28,7 @@ class ResponseProvider
 		foreach ($headers as $key => $value) {
 			header($key . ":" . $value, true);
 		}
-		$redirectUrl = $this->router->url . "error/code/" . $statusCode;
+		$redirectUrl = $this->router->url . "errors/code/" . $statusCode;
 		echo "<script>location.replace('".$redirectUrl."'); </script>";
 
 	}
