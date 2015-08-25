@@ -28,7 +28,7 @@ class DataBaseProvider
 		return $sth->fetchAll(PDO::FETCH_ASSOC);
 	}
 	
-	public function findBy($table, $filters, $limit = '', $oderBy = array())
+	public function findBy($table, $filters, $limit = '', $orderBy = '')
 	{
 		
 		foreach ($filters as $column => $value) {
@@ -42,6 +42,9 @@ class DataBaseProvider
 			$prefix = ($i == 0 ? 'WHERE' : 'AND');
 			$sql .= " ".$prefix." ".$columns[$i]." LIKE ".$placeholders[$i]." ";
 		}
+
+		$sql .= ($limit <> '' ? ' LIMIT '.$limit : '');
+		$sql .= ($orderBy <> '' ? ' ORDER BY '.$orderBy : '');
 
 		$sth = $this->pdo->prepare($sql);
 		for ($i=0; $i < count($values); $i++) { 
