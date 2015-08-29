@@ -17,6 +17,7 @@ class MailerProvider
 		$this->config = $this->dbh->findOneBy('Configuracao', 'id', 1);
 
 		$this->mh = new PHPMailer;
+		$this->mh->CharSet = 'UTF-8';
 		$this->mh->isSMTP();
 		$this->mh->SMTPAuth = true;
 		$this->mh->SMTPSecure = 'tls';
@@ -33,31 +34,29 @@ class MailerProvider
 		$this->mh->Host = $this->config['smtpEmail'];		
 		$this->mh->Username = $this->config['contatoEmail'];
 		$this->mh->Password = base64_decode($this->config['senhaEmail']);
-		$this->mh->From = $this->config['contatoEmail'];
-		$this->mh->FromName = $this->config['nome'];
 	}
 
 	public function setAddress($to = array(), $cc = array(), $bcc = array())
 	{
 		// setManyAddress
-		foreach ($to as $key => $value) {
-			$this->mh->addAddress($value);
-		}
+		$this->mh->addAddress($to[0]);
+		$this->mh->FromName = $to[1];
+		$this->mh->From = $to[2];
 
 		// setCc
-		foreach ($cc as $key => $value) {
+		foreach ($cc as $value) {
 			$this->mh->addCC($value);
 		}
 
 		// setBcc
-		foreach ($bcc as $key => $value) {
+		foreach ($bcc as $value) {
 			$this->mh->addBCC($value);
 		}
 	}
 
 	public function setSubject($subject = '')
 	{
-		$this->mh->Subject = utf8_decode($subject);
+		$this->mh->Subject = $subject;
 	}
 
 	public function setBody($body)
@@ -71,7 +70,7 @@ class MailerProvider
 		include('templates/emails/email-template.php');
 
 		$template = $buffer;
-		$this->mh->Body = utf8_decode($template);
+		$this->mh->Body = $template;
 	}
 
 	public function send()
@@ -82,6 +81,7 @@ class MailerProvider
 			return true;
 		}
 	}
+
 }
 
 
