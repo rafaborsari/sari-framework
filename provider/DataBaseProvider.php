@@ -43,8 +43,9 @@ class DataBaseProvider
 			$sql .= " ".$prefix." ".$columns[$i]." LIKE ".$placeholders[$i]." ";
 		}
 
-		$sql .= ($limit <> '' ? ' LIMIT '.$limit : '');
+		
 		$sql .= ($orderBy <> '' ? ' ORDER BY '.$orderBy : '');
+		$sql .= ($limit <> '' ? ' LIMIT '.$limit : '');
 
 		$sth = $this->pdo->prepare($sql);
 		for ($i=0; $i < count($values); $i++) { 
