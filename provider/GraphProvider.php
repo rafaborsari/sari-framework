@@ -12,7 +12,7 @@ use ColumnSeries;
 class GraphProvider
 {
 
-	public function __construct($text, $width = 680, $height = 480)
+	public function __construct($text, $width = 680, $height = 480, $padding = 20)
 	{
 		$this->dbh = new DataBaseProvider;
 		$this->router = new RouterProvider;
@@ -21,6 +21,7 @@ class GraphProvider
 		$this->chart->Title->Text = $text;
 		$this->chart->Width = $width;
 		$this->chart->Height = $height;
+		$this->chart->Padding = $padding;
 		$this->chart->DecimalNumber = 2;
 		$this->chart->DecimalSeparator = ",";
 		$this->chart->ThousandSeparator = ".";
