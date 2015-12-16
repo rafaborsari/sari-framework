@@ -59,6 +59,16 @@ class RouterProvider
             ? $this->uri[1]
             : 'main' ;
 
+        $this->action = lcfirst(implode('', 
+            array_map(
+                function($word){
+                    return ucfirst($word);
+                }, 
+                explode('-', $this->action)
+                )
+            )
+        );
+
         return $this->action;
     }
 
