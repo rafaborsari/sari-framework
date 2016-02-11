@@ -1,0 +1,14 @@
+{
+    "name": "rafaborsari/sari-framework",
+    "description": "Personal framework",
+    "type": "library",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Rafael Borsari",
+            "email": "rafael.borsari@sariweb.com.br"
+        }
+    ],
+    "minimum-stability": "dev",
+    "require": {}
+}
